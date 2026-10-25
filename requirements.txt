@@ -1,0 +1,9 @@
+pandas
+datasets
+chromadb
+ollama
+fastapi
+uvicorn
+streamlit
+requests
+python-dotenv
