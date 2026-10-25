@@ -30,32 +30,27 @@ Everything runs locally on CPU with free, open tooling: Ollama (Qwen2.5-1.5B), C
 
 
 
-```mermaid
-
-flowchart LR
-
-&#x20;   C\["Customer"] --> UI\["Streamlit chat"]
-
-&#x20;   UI -->|HTTP| API\["FastAPI"]
-
-&#x20;   API --> AG\["Agent"]
-
-&#x20;   AG -->|order request| FL\["Order flow"]
-
-&#x20;   FL --> OD\[("Orders DB")]
-
-&#x20;   AG -->|general question| RG\["RAG: ChromaDB + embeddings"]
-
-&#x20;   RG --> LM\["Ollama: Qwen2.5-1.5B"]
-
-&#x20;   AG -->|no evidence, sensitive case, late order| TK\[("Tickets DB")]
-
-&#x20;   TK --> AD\["Admin inbox"]
-
-&#x20;   AD -->|reply| UI
-
 ```
-
+Customer
+   |
+   v
+Streamlit chat  <------------------------------ human reply ----+
+   |                                                             |
+   v                                                             |
+FastAPI                                                          |
+   |                                                             |
+   v                                                             |
+Agent                                                            |
+   |                                                             |
+   |-- order request --------> Order flow ------> Orders DB      |
+   |                                                             |
+   |-- general question -----> RAG (ChromaDB) --> Qwen2.5-1.5B   |
+   |                           via Ollama                         |
+   '-- no evidence / sensitive case / late order                 |
+                 |                                               |
+                 v                                               |
+            Tickets DB ------> Admin inbox -----------------------+
+```
 
 
 | Technique | Where | What it does here |
@@ -178,9 +173,9 @@ Requirements: Python 3.11+, \[Ollama](https://ollama.com), about 8 GB RAM.
 
 ```bash
 
-git clone https://github.com/<your-username>/supportops-ai.git
+git clone https://github.com/3BDO145/Ai-Support-Chat.git
 
-cd supportops-ai
+cd Ai-Support-Chat
 
 python -m venv venv
 
